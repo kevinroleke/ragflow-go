@@ -20,7 +20,7 @@ func main() {
 		baseURL = "http://127.0.0.1"
 	}
 
-	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL))
+	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
 
