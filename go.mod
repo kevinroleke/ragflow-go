@@ -1,4 +1,4 @@
-module github.com/staklabs/ragflow-go
+module github.com/kevinroleke/ragflow-go
 
 go 1.21
 

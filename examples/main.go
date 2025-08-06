@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	ragflow "github.com/staklabs/ragflow-go"
+	ragflow "github.com/kevinroleke/ragflow-go"
 )
 
 func main() {

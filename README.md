@@ -17,7 +17,7 @@ A comprehensive Go client library for interacting with the RAGFlow HTTP API. RAG
 ## Installation
 
 ```bash
-go get github.com/staklabs/ragflow-go
+go get github.com/kevinroleke/ragflow-go
 ```
 
 ## Quick Start
@@ -31,7 +31,7 @@ import (
     "log"
     "os"
 
-    ragflow "github.com/staklabs/ragflow-go"
+    ragflow "github.com/kevinroleke/ragflow-go"
 )
 
 func main() {
