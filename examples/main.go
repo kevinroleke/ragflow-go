@@ -23,6 +23,18 @@ func main() {
 	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
+	
+	fmt.Println("Getting factories...")
+	factories, err := client.GetFactories(ctx)
+	if err != nil {
+		log.Fatalf("Error getting factories: %v", err)
+	}
+	fmt.Printf("Found %d factories:\n", len(factories))
+	for _, factory := range factories {
+		fmt.Printf("- %s (Status: %s, Types: %v)\n", factory.Name, factory.Status, factory.ModelTypes)
+	}
+	fmt.Println()
+
 	llm, err := client.GetMyLLMs(ctx)
 	if err != nil {
 		log.Fatalf("Error get llms: %v", err)

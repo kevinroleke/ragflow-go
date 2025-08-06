@@ -24,6 +24,18 @@ type LLMProvider struct {
 // Response structure for /v1/llm/my_llms endpoint
 type MyLLMsResponse map[string]LLMProvider
 
+type Factory struct {
+	CreateDate  string   `json:"create_date"`
+	CreateTime  int64    `json:"create_time"`
+	Logo        string   `json:"logo"`
+	ModelTypes  []string `json:"model_types"`
+	Name        string   `json:"name"`
+	Status      string   `json:"status"`
+	Tags        string   `json:"tags"`
+	UpdateDate  string   `json:"update_date"`
+	UpdateTime  int64    `json:"update_time"`
+}
+
 func (c *Client) newUserRequest(ctx context.Context, method, endpoint string, body interface{}) (*http.Request, error) {
 	url := c.BaseURL + endpoint
 
@@ -72,6 +84,31 @@ func (c *Client) GetMyLLMs(ctx context.Context) (MyLLMsResponse, error) {
 	}
 
 	var response Response[MyLLMsResponse]
+	err = json.Unmarshal(bytes, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, err
+}
+
+func (c *Client) GetFactories(ctx context.Context) ([]Factory, error) {
+	req, err := c.newUserRequest(ctx, http.MethodGet, "/v1/llm/factories", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer httpRes.Body.Close()
+	bytes, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response Response[[]Factory]
 	err = json.Unmarshal(bytes, &response)
 	if err != nil {
 		return nil, err
