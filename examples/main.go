@@ -23,6 +23,11 @@ func main() {
 	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
+	llm, err := client.GetMyLLMs(ctx)
+	if err != nil {
+		log.Fatalf("Error get llms: %v", err)
+	}
+	fmt.Println(llm)
 
 	/*
 	fmt.Println("Creating a dataset...")
