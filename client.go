@@ -276,7 +276,7 @@ func (c *Client) checkAPIResponse(body []byte) error {
 }
 
 func (c *Client) buildURL(endpoint string, params map[string]string) string {
-	u := c.BaseURL + endpoint
+	u := endpoint
 	if len(params) == 0 {
 		return u
 	}
