@@ -132,9 +132,27 @@ func (c *Client) GetDocument(ctx context.Context, datasetID, documentID string) 
 	return &resp.Data, nil
 }
 
-func (c *Client) DeleteDocument(ctx context.Context, datasetID, documentID string) error {
-	endpoint := fmt.Sprintf("/api/v1/datasets/%s/documents/%s", datasetID, documentID)
-	httpReq, err := c.newRequest(ctx, http.MethodDelete, endpoint, nil)
+func (c *Client) ParseDocuments(ctx context.Context, datasetID, documentIDs []string) error {
+	endpoint := fmt.Sprintf("/api/v1/datasets/%s/chunks", datasetID)
+	httpReq, err := c.newRequest(ctx, http.MethodPost, endpoint, struct {
+		IDs []string `json:"document_ids"`
+	}{
+		IDs: documentIDs,
+		})
+	if err != nil {
+		return err
+	}
+
+	return c.do(httpReq, nil)
+}
+
+func (c *Client) DeleteDocuments(ctx context.Context, datasetID, documentIDs []string) error {
+	endpoint := fmt.Sprintf("/api/v1/datasets/%s/documents", datasetID)
+	httpReq, err := c.newRequest(ctx, http.MethodDelete, endpoint, struct {
+		IDs []string `json:"ids"`
+	}{
+		IDs: documentIDs,
+		})
 	if err != nil {
 		return err
 	}
@@ -153,7 +171,7 @@ type ListDocumentsOptions struct {
 
 func (c *Client) ListDocuments(ctx context.Context, datasetID string, opts *ListDocumentsOptions) (*ListResponse[Document], error) {
 	params := make(map[string]string)
-	
+
 	if opts != nil {
 		if opts.Page > 0 {
 			params["page"] = strconv.Itoa(opts.Page)
@@ -268,7 +286,7 @@ type ListChunksOptions struct {
 
 func (c *Client) ListChunks(ctx context.Context, datasetID string, opts *ListChunksOptions) (*ListResponse[Chunk], error) {
 	params := make(map[string]string)
-	
+
 	if opts != nil {
 		if opts.Page > 0 {
 			params["page"] = strconv.Itoa(opts.Page)

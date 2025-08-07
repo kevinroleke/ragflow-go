@@ -23,9 +23,20 @@ func main() {
 	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
-	suc, err := client.SetAPIKey(ctx, ragflow.SetAPIKeyRequest{
+	/*suc, err := client.SetAPIKey(ctx, ragflow.SetAPIKeyRequest{
 		ApiKey: "123",
 		FactoryName: "OpenAI",
+	})
+	if !suc || err != nil {
+		log.Fatalf("Err: %v\n", err)
+	}*/
+
+	suc, err := client.AddLLM(ctx, ragflow.AddLLMRequest{
+		ApiBase: "123",
+		ModelName: "4",
+		MaxTokens: 4,
+		FactoryName: "Ollama",
+		ModelType: "123",
 	})
 	if !suc || err != nil {
 		log.Fatalf("Err: %v\n", err)
