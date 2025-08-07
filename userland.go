@@ -36,6 +36,21 @@ type Factory struct {
 	UpdateTime  int64    `json:"update_time"`
 }
 
+type SetAPIKeyRequest struct {
+	FactoryName string `json:"llm_factory"`
+	ApiKey *string `json:"api_key"`
+}
+
+type AddLLMRequest struct {
+	FactoryName string `json:"llm_factory"`
+	ApiKey *string `json:"api_key"`
+	ApiBase string `json:"api_base"`
+	ApiVersion *string `json:"api_version"` // only Azure-OpenAI
+	ModelName string `json:"llm_name"`
+	MaxTokens int `json:"max_tokens"`
+	ModelType string `json:"model_type"`
+}
+
 func (c *Client) newUserRequest(ctx context.Context, method, endpoint string, body interface{}) (*http.Request, error) {
 	url := c.BaseURL + endpoint
 
@@ -112,6 +127,56 @@ func (c *Client) GetFactories(ctx context.Context) ([]Factory, error) {
 	err = json.Unmarshal(bytes, &response)
 	if err != nil {
 		return nil, err
+	}
+
+	return response.Data, err
+}
+
+func (c *Client) SetAPIKey(ctx context.Context, params SetAPIKeyRequest) (bool, error) {
+	req, err := c.newUserRequest(ctx, http.MethodPost, "/v1/llm/set_api_key", params)
+	if err != nil {
+		return false, err
+	}
+
+	httpRes, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return false, err
+	}
+	defer httpRes.Body.Close()
+	bytes, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return false, err
+	}
+
+	var response Response[bool]
+	err = json.Unmarshal(bytes, &response)
+	if err != nil {
+		return false, err
+	}
+
+	return response.Data, err
+}
+
+func (c *Client) AddLLM(ctx context.Context, params AddLLMRequest) (bool, error) {
+	req, err := c.newUserRequest(ctx, http.MethodPost, "/v1/llm/add_llm", params)
+	if err != nil {
+		return false, err
+	}
+
+	httpRes, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return false, err
+	}
+	defer httpRes.Body.Close()
+	bytes, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return false, err
+	}
+
+	var response Response[bool]
+	err = json.Unmarshal(bytes, &response)
+	if err != nil {
+		return false, err
 	}
 
 	return response.Data, err
