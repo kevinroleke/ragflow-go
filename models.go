@@ -126,7 +126,7 @@ type CreateDatasetRequest struct {
 	Description         string                 `json:"description,omitempty"`
 	Language            string                 `json:"language,omitempty"`
 	Permission          string                 `json:"permission,omitempty"`
-	ParseMethod         string                 `json:"parse_method,omitempty"`
+	ParseMethod         string                 `json:"chunk_method,omitempty"`
 	ParserConfig        map[string]interface{} `json:"parser_config,omitempty"`
 	Avatar              string                 `json:"avatar,omitempty"`
 	EmbeddingModel      string                 `json:"embedding_model,omitempty"`
