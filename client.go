@@ -11,6 +11,7 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -217,7 +218,7 @@ func (c *Client) do(req *http.Request, v interface{}) error {
 	if err != nil {
 		return fmt.Errorf("error reading response body: %w", err)
 	}
-	//log.Println(string(bodyBytes))
+	log.Println(string(bodyBytes))
 
 	if resp.StatusCode >= 400 {
 		return c.handleErrorResponse(resp.StatusCode, bodyBytes)

@@ -169,7 +169,7 @@ type ListDocumentsOptions struct {
 	ID       string
 }
 
-func (c *Client) ListDocuments(ctx context.Context, datasetID string, opts *ListDocumentsOptions) (*ListResponse[Document], error) {
+func (c *Client) ListDocuments(ctx context.Context, datasetID string, opts *ListDocumentsOptions) (*DocumentsList, error) {
 	params := make(map[string]string)
 
 	if opts != nil {
@@ -200,7 +200,7 @@ func (c *Client) ListDocuments(ctx context.Context, datasetID string, opts *List
 		return nil, err
 	}
 
-	var resp ListResponse[Document]
+	var resp DocumentsList
 	if err := c.do(httpReq, &resp); err != nil {
 		return nil, err
 	}

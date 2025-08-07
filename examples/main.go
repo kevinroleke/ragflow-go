@@ -30,11 +30,16 @@ func main() {
 		log.Fatalf("Err: %v\n", err)
 	}*/
 
-	datasets, err := client.ListDatasets(ctx, &ragflow.ListDatasetsOptions{})
+	/*datasets, err := client.ListDatasets(ctx, &ragflow.ListDatasetsOptions{})
+	if err != nil {
+		log.Fatalln(err)
+	}*/
+
+	docs, err := client.ListDocuments(ctx, "a931096e73e811f0aaf70242ac120006", &ragflow.ListDocumentsOptions{})
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Println(datasets)
+	log.Println(docs)
 
 	/*
 	suc, err := client.AddLLM(ctx, ragflow.AddLLMRequest{

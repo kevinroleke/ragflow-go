@@ -316,6 +316,15 @@ type UpdateAgentRequest struct {
 	DSL         map[string]interface{} `json:"dsl,omitempty"`
 }
 
+type DocumentsList struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Data    struct {
+		Total int `json:"total"`
+		Items []Document `json:"docs"`
+	} `json:"data"`
+}
+
 type ListResponse[T any] struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
