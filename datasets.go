@@ -70,7 +70,7 @@ type ListDatasetsOptions struct {
 	ID       string
 }
 
-func (c *Client) ListDatasets(ctx context.Context, opts *ListDatasetsOptions) (*ListResponse[Dataset], error) {
+func (c *Client) ListDatasets(ctx context.Context, opts *ListDatasetsOptions) (*Response[[]Dataset], error) {
 	params := make(map[string]string)
 
 	if opts != nil {
@@ -100,7 +100,7 @@ func (c *Client) ListDatasets(ctx context.Context, opts *ListDatasetsOptions) (*
 		return nil, err
 	}
 
-	var resp ListResponse[Dataset]
+	var resp Response[[]Dataset]
 	if err := c.do(httpReq, &resp); err != nil {
 		return nil, err
 	}

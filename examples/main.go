@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 
@@ -31,6 +30,13 @@ func main() {
 		log.Fatalf("Err: %v\n", err)
 	}*/
 
+	datasets, err := client.ListDatasets(ctx, &ragflow.ListDatasetsOptions{})
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Println(datasets)
+
+	/*
 	suc, err := client.AddLLM(ctx, ragflow.AddLLMRequest{
 		ApiBase: "123",
 		ModelName: "4",
@@ -58,6 +64,7 @@ func main() {
 		log.Fatalf("Error get llms: %v", err)
 	}
 	fmt.Println(llm)
+*/
 
 	/*
 	fmt.Println("Creating a dataset...")
@@ -69,7 +76,6 @@ func main() {
 		log.Fatalf("Error creating dataset: %v", err)
 	}
 	fmt.Printf("Created dataset: %s (ID: %s)\n", dataset.Name, dataset.ID)
-	*/
 	var dataset ragflow.Dataset
 	dataset.ID = "72c10e7c72f011f0aa4a0242ac120006"
 
@@ -170,4 +176,5 @@ cleanup:
 	}
 
 	fmt.Println("Example completed successfully!")
+	*/
 }
