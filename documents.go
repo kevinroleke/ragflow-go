@@ -132,7 +132,7 @@ func (c *Client) GetDocument(ctx context.Context, datasetID, documentID string) 
 	return &resp.Data, nil
 }
 
-func (c *Client) ParseDocuments(ctx context.Context, datasetID, documentIDs []string) error {
+func (c *Client) ParseDocuments(ctx context.Context, datasetID string, documentIDs []string) error {
 	endpoint := fmt.Sprintf("/api/v1/datasets/%s/chunks", datasetID)
 	httpReq, err := c.newRequest(ctx, http.MethodPost, endpoint, struct {
 		IDs []string `json:"document_ids"`
@@ -146,7 +146,7 @@ func (c *Client) ParseDocuments(ctx context.Context, datasetID, documentIDs []st
 	return c.do(httpReq, nil)
 }
 
-func (c *Client) DeleteDocuments(ctx context.Context, datasetID, documentIDs []string) error {
+func (c *Client) DeleteDocuments(ctx context.Context, datasetID string, documentIDs []string) error {
 	endpoint := fmt.Sprintf("/api/v1/datasets/%s/documents", datasetID)
 	httpReq, err := c.newRequest(ctx, http.MethodDelete, endpoint, struct {
 		IDs []string `json:"ids"`
