@@ -252,6 +252,7 @@ type Assistant struct {
 type CreateAssistantRequest struct {
 	Name            string                 `json:"name"`
 	Description     string                 `json:"description,omitempty"`
+	DatasetIDs      []string               `json:"dataset_ids,omitempty"`
 	Avatar          string                 `json:"avatar,omitempty"`
 	Prompt          Prompt `json:"prompt,omitempty"`
 	LLMModel		LLMModelSettings `json:"llm"`
