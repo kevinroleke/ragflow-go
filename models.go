@@ -217,6 +217,10 @@ type Prompt struct {
 	Variables                 []Variable `json:"variables"`
 }
 
+type LLMModelSettings struct {
+	ModelName string `json:"model_name"`
+}
+
 type Assistant struct {
 	ID              string                 `json:"id"`
 	Name            string                 `json:"name"`
@@ -249,23 +253,8 @@ type CreateAssistantRequest struct {
 	Name            string                 `json:"name"`
 	Description     string                 `json:"description,omitempty"`
 	Avatar          string                 `json:"avatar,omitempty"`
-	Language        string                 `json:"language,omitempty"`
-	Prompt          string                 `json:"prompt,omitempty"`
-	LLMSetting      map[string]interface{} `json:"llm_setting,omitempty"`
-	LLMModel        string                 `json:"llm_model,omitempty"`
-	DatasetIDs      []string               `json:"dataset_ids,omitempty"`
-	TopK            int                    `json:"top_k,omitempty"`
-	SimilarityThreshold float64            `json:"similarity_threshold,omitempty"`
-	VectorSimilarityWeight float64         `json:"vector_similarity_weight,omitempty"`
-	TopP            float64                `json:"top_p,omitempty"`
-	Temperature     float64                `json:"temperature,omitempty"`
-	MaxTokens       int                    `json:"max_tokens,omitempty"`
-	PresencePenalty float64                `json:"presence_penalty,omitempty"`
-	FrequencyPenalty float64               `json:"frequency_penalty,omitempty"`
-	ReRank          bool                   `json:"rerank,omitempty"`
-	EmptyResponse   string                 `json:"empty_response,omitempty"`
-	MaxReference    int                    `json:"max_reference,omitempty"`
-	ReRankModel     string                 `json:"rerank_model,omitempty"`
+	Prompt          Prompt `json:"prompt,omitempty"`
+	LLMModel		LLMModelSettings `json:"llm"`
 }
 
 type UpdateAssistantRequest struct {
