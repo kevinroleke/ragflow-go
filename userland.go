@@ -38,7 +38,7 @@ type Factory struct {
 
 type SetAPIKeyRequest struct {
 	FactoryName string `json:"llm_factory"`
-	ApiKey *string `json:"api_key"`
+	ApiKey string `json:"api_key"`
 }
 
 type AddLLMRequest struct {
@@ -154,6 +154,10 @@ func (c *Client) SetAPIKey(ctx context.Context, params SetAPIKeyRequest) (bool, 
 		return false, err
 	}
 
+	if !response.Data {
+		return false, fmt.Errorf(response.Message)
+	}
+
 	return response.Data, err
 }
 
@@ -177,6 +181,10 @@ func (c *Client) AddLLM(ctx context.Context, params AddLLMRequest) (bool, error)
 	err = json.Unmarshal(bytes, &response)
 	if err != nil {
 		return false, err
+	}
+
+	if !response.Data {
+		return false, fmt.Errorf(response.Message)
 	}
 
 	return response.Data, err

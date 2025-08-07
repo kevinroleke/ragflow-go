@@ -23,7 +23,14 @@ func main() {
 	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
-	
+	suc, err := client.SetAPIKey(ctx, ragflow.SetAPIKeyRequest{
+		ApiKey: "123",
+		FactoryName: "OpenAI",
+	})
+	if !suc || err != nil {
+		log.Fatalf("Err: %v\n", err)
+	}
+
 	fmt.Println("Getting factories...")
 	factories, err := client.GetFactories(ctx)
 	if err != nil {
