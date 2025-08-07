@@ -49,18 +49,7 @@ type ChatCompletionRequest struct {
 	Model            string                 `json:"model"`
 	Messages         []ChatMessage          `json:"messages"`
 	Stream           bool                   `json:"stream"`
-	MaxTokens        int                    `json:"max_tokens,omitempty"`
-	Temperature      float64                `json:"temperature,omitempty"`
-	TopP             float64                `json:"top_p,omitempty"`
-	PresencePenalty  float64                `json:"presence_penalty,omitempty"`
-	FrequencyPenalty float64                `json:"frequency_penalty,omitempty"`
-	N                int                    `json:"n,omitempty"`
-	Stop             []string               `json:"stop,omitempty"`
-	User             string                 `json:"user,omitempty"`
 	ConversationID   string                 `json:"conversation_id,omitempty"`
-	Quote            bool                   `json:"quote,omitempty"`
-	DocIDs           []string               `json:"doc_ids,omitempty"`
-	Parameters       map[string]interface{} `json:"parameters,omitempty"`
 }
 
 type ChatMessage struct {
