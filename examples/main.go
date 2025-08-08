@@ -22,11 +22,23 @@ func main() {
 	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
+	/*
 	res, err := client.UploadDocumentFromBytes(ctx, "a931096e73e811f0aaf70242ac120006", "test.txt", []byte(""))
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Println(res)
+	*/
+	assistant, err := client.CreateAssistant(ctx, ragflow.CreateAssistantRequest{
+		Name:        "Example 0100000001055412134",
+		Description: "An assistant for testing the RAGFlow Go client",
+		DatasetIDs:  []string{"a931096e73e811f0aaf70242ac120006"},
+		LLMModel: "gpt-4o",
+	})
+	if err != nil {
+		log.Fatalf("Error creating assistant: %v", err)
+	}
+	log.Println(assistant)
+	log.Printf("Created assistant: %s (ID: %s)\n", assistant.Name, assistant.ID)
 	/*suc, err := client.SetAPIKey(ctx, ragflow.SetAPIKeyRequest{
 		ApiKey: "123",
 		FactoryName: "OpenAI",
