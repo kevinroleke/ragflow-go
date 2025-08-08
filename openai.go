@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"strings"
 )
 
@@ -42,12 +43,14 @@ func (c *Client) CreateChatCompletionStream(ctx context.Context, req ChatComplet
 		httpReq, err := c.newRequest(ctx, "POST", endpoint, req)
 		if err != nil {
 			errChan <- err
+			log.Println("46new")
 			return
 		}
 
 		resp, err := c.HTTPClient.Do(httpReq)
 		if err != nil {
 			errChan <- fmt.Errorf("error making request: %w", err)
+			log.Println("51req")
 			return
 		}
 		defer resp.Body.Close()
@@ -55,6 +58,7 @@ func (c *Client) CreateChatCompletionStream(ctx context.Context, req ChatComplet
 		if resp.StatusCode >= 400 {
 			bodyBytes, _ := io.ReadAll(resp.Body)
 			errChan <- c.handleErrorResponse(resp.StatusCode, bodyBytes)
+			log.Println("59over400")
 			return
 		}
 
@@ -69,6 +73,7 @@ func (c *Client) CreateChatCompletionStream(ctx context.Context, req ChatComplet
 			data := strings.TrimPrefix(line, "data: ")
 
 			if data == "[DONE]" {
+				log.Println("72[DONE]")
 				return
 			}
 
@@ -81,6 +86,7 @@ func (c *Client) CreateChatCompletionStream(ctx context.Context, req ChatComplet
 			case respChan <- streamResp:
 			case <-ctx.Done():
 				errChan <- ctx.Err()
+				log.Println("ctx done errchan")
 				return
 			}
 		}
