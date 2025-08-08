@@ -22,6 +22,11 @@ func main() {
 	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
+	res, err := client.UploadDocumentFromBytes(ctx, "a931096e73e811f0aaf70242ac120006", "test.txt", []byte(""))
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Println(res)
 	/*suc, err := client.SetAPIKey(ctx, ragflow.SetAPIKeyRequest{
 		ApiKey: "123",
 		FactoryName: "OpenAI",
@@ -35,11 +40,13 @@ func main() {
 		log.Fatalln(err)
 	}*/
 
+	/*
 	docs, err := client.ListDocuments(ctx, "a931096e73e811f0aaf70242ac120006", &ragflow.ListDocumentsOptions{})
 	if err != nil {
 		log.Fatalln(err)
 	}
 	log.Println(docs)
+*/
 
 	/*
 	suc, err := client.AddLLM(ctx, ragflow.AddLLMRequest{

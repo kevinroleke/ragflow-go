@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -110,6 +111,7 @@ func (c *Client) UploadDocumentFromBytes(ctx context.Context, datasetID, filenam
 		return nil, fmt.Errorf("error decoding response: %w", err)
 	}
 
+	log.Println(result)
 	if len(result.Data) == 0 {
 		return nil, fmt.Errorf("no documents returned")
 	}
