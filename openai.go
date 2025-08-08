@@ -67,10 +67,12 @@ func (c *Client) CreateChatCompletionStream(ctx context.Context, req ChatComplet
 			line := strings.TrimSpace(scanner.Text())
 
 			if line == "" || !strings.HasPrefix(line, "data: ") {
+				log.Println("empty line")
 				continue
 			}
 
 			data := strings.TrimPrefix(line, "data: ")
+			log.Println("dataline", data)
 
 			if data == "[DONE]" {
 				log.Println("72[DONE]")
@@ -79,6 +81,7 @@ func (c *Client) CreateChatCompletionStream(ctx context.Context, req ChatComplet
 
 			var streamResp ChatCompletionResponse
 			if err := json.Unmarshal([]byte(data), &streamResp); err != nil {
+				log.Println("wouldnt marshal", data, err)
 				continue
 			}
 
