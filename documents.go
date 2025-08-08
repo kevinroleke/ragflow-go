@@ -209,7 +209,7 @@ func (c *Client) ListDocuments(ctx context.Context, datasetID string, opts *List
 }
 
 func (c *Client) DownloadDocument(ctx context.Context, datasetID, documentID string) ([]byte, error) {
-	endpoint := fmt.Sprintf("/api/v1/datasets/%s/documents/%s/download", datasetID, documentID)
+	endpoint := fmt.Sprintf("/api/v1/datasets/%s/documents/%s", datasetID, documentID)
 	httpReq, err := c.newRequest(ctx, http.MethodGet, endpoint, nil)
 	if err != nil {
 		return nil, err

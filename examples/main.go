@@ -29,7 +29,7 @@ func main() {
 	}
 	*/
 	assistant, err := client.CreateAssistant(ctx, ragflow.CreateAssistantRequest{
-		Name:        "Example 122210010000101055412134",
+		Name:        "Example 122231001004010101055412134",
 		Description: "An assistant for testing the RAGFlow Go client",
 		DatasetIDs:  []string{"a931096e73e811f0aaf70242ac120006"},
 		LLMModel: "gpt-4o",
@@ -51,14 +51,14 @@ func main() {
 	// Test streaming chat completion
 	log.Println("Testing streaming chat completion...")
 	respChan, errChan := client.CreateChatCompletionStream(ctx, ragflow.ChatCompletionRequest{
-		Model: assistant.ID,
+		Model: "09016520740011f080720242ac120006",//assistant.ID,
 		Messages: []ragflow.ChatMessage{
 			{
 				Role:    "user",
 				Content: "Hello! Can you tell me about yourself and what you can help with?",
 			},
 		},
-		ConversationID: session.ID,
+		ConversationID: "090a4aa0740011f0bc920242ac120006",//session.ID,
 	})
 
 	var fullResponse string
