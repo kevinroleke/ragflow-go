@@ -29,7 +29,7 @@ func main() {
 	}
 	*/
 	assistant, err := client.CreateAssistant(ctx, ragflow.CreateAssistantRequest{
-		Name:        "Example 0100000001055412134",
+		Name:        "Example 122210010000101055412134",
 		Description: "An assistant for testing the RAGFlow Go client",
 		DatasetIDs:  []string{"a931096e73e811f0aaf70242ac120006"},
 		LLMModel: "gpt-4o",
@@ -37,8 +37,51 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error creating assistant: %v", err)
 	}
-	log.Println(assistant)
 	log.Printf("Created assistant: %s (ID: %s)\n", assistant.Name, assistant.ID)
+
+	log.Println("Creating a session...")
+	session, err := client.CreateSession(ctx, assistant.ID, ragflow.CreateSessionRequest{
+		Name: "Example 234235410",
+	})
+	if err != nil {
+		log.Fatalf("Error creating session: %v", err)
+	}
+	log.Printf("Created session: %s (ID: %s)\n", session.Name, session.ID)
+
+	// Test streaming chat completion
+	log.Println("Testing streaming chat completion...")
+	respChan, errChan := client.CreateChatCompletionStream(ctx, ragflow.ChatCompletionRequest{
+		Model: assistant.ID,
+		Messages: []ragflow.ChatMessage{
+			{
+				Role:    "user",
+				Content: "Hello! Can you tell me about yourself and what you can help with?",
+			},
+		},
+		ConversationID: session.ID,
+	})
+
+	var fullResponse string
+	for {
+		select {
+		case resp, ok := <-respChan:
+			if !ok {
+				log.Printf("Complete streaming response: %s\n", fullResponse)
+				goto done
+			}
+			if len(resp.Choices) > 0 {
+				fullResponse += resp.Choices[0].Delta.Content
+				log.Printf("Stream chunk: %s", resp.Choices[0].Delta.Content)
+			}
+		case err := <-errChan:
+			if err != nil {
+				log.Fatalf("Error in streaming chat completion: %v", err)
+			}
+		}
+	}
+
+done:
+	log.Println("Streaming test completed successfully!")
 	/*suc, err := client.SetAPIKey(ctx, ragflow.SetAPIKeyRequest{
 		ApiKey: "123",
 		FactoryName: "OpenAI",
