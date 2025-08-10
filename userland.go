@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"io"
 	"net/http"
 )
@@ -97,6 +98,7 @@ func (c *Client) GetMyLLMs(ctx context.Context) (MyLLMsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Println("RAGFLOW USERLAND RESP:", string(bytes))
 
 	var response Response[MyLLMsResponse]
 	err = json.Unmarshal(bytes, &response)

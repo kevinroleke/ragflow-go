@@ -219,8 +219,8 @@ func (c *Client) do(req *http.Request, v interface{}) error {
 		return fmt.Errorf("error reading response body: %w", err)
 	}
 
-	log.Println("RAGFLOW REQ: ", req)
-	log.Println("RAGFLOW RESP: ", bodyBytes)
+	log.Println("RAGFLOW REQ:", req)
+	log.Println("RAGFLOW RESP:", string(bodyBytes))
 
 	if resp.StatusCode >= 400 {
 		return c.handleErrorResponse(resp.StatusCode, bodyBytes)
