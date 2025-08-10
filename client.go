@@ -2,6 +2,7 @@ package ragflow
 
 import (
 	"bytes"
+	"log"
 	"context"
 	"crypto/rand"
 	"crypto/rsa"
@@ -217,6 +218,9 @@ func (c *Client) do(req *http.Request, v interface{}) error {
 	if err != nil {
 		return fmt.Errorf("error reading response body: %w", err)
 	}
+
+	log.Println("RAGFLOW REQ: ", req)
+	log.Println("RAGFLOW RESP: ", bodyBytes)
 
 	if resp.StatusCode >= 400 {
 		return c.handleErrorResponse(resp.StatusCode, bodyBytes)
