@@ -2,6 +2,7 @@ package ragflow
 
 import (
 	"encoding/json"
+	"log"
 	"strconv"
 	"time"
 )
@@ -23,9 +24,11 @@ func (ut *UnixTime) UnmarshalJSON(data []byte) error {
 		if err != nil {
 			return err
 		}
-		ut.Time = time.Unix(timestamp, 0)
+		ut.Time = time.Unix(int64(timestamp / 1000), 0)
+		log.Println("used unix time")
 		return nil
 	}
+	log.Println("used string time")
 
 	// Try to parse as RFC3339 string
 	var timeStr string

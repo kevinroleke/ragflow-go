@@ -22,12 +22,16 @@ func main() {
 	client := ragflow.NewClient(apiKey, ragflow.WithBaseURL(baseURL), ragflow.WithUserPass("kevin@zerogon.consulting", "http://34.23.156.236/login"))
 
 	ctx := context.Background()
+	datasets, err := client.ListDatasets(ctx, &ragflow.ListDatasetsOptions{
+	})
+	log.Println(datasets, err)
 	/*
 	res, err := client.UploadDocumentFromBytes(ctx, "a931096e73e811f0aaf70242ac120006", "test.txt", []byte(""))
 	if err != nil {
 		log.Fatalln(err)
 	}
 	*/
+	/*
 	assistant, err := client.CreateAssistant(ctx, ragflow.CreateAssistantRequest{
 		Name:        "Example 122231001004010101055412134",
 		Description: "An assistant for testing the RAGFlow Go client",
@@ -82,6 +86,7 @@ func main() {
 
 done:
 	log.Println("Streaming test completed successfully!")
+*/
 	/*suc, err := client.SetAPIKey(ctx, ragflow.SetAPIKeyRequest{
 		ApiKey: "123",
 		FactoryName: "OpenAI",
